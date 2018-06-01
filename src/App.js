@@ -55,15 +55,27 @@ class App extends Component {
   }
 
   onCreate(title, due_date, priority ){
-    const todos = JSON.parse(localStorage.getItem('todos'))
+    // const todos = JSON.parse(localStorage.getItem('todos'))
 
-     todos.push({
-      title,
-       due_date,
-       priority
-     });
+    //  todos.push({
+    //   title,
+    //    due_date,
+    //    priority
+    //  });
 
-    this.setState( { todos } );
+    const newTodo = {
+      title: title,
+      due_date: due_date,
+      priority: priority
+    };
+
+    console.log(newTodo);
+
+
+
+    this.setState({ 
+      todos: [...this.state.todos, newTodo] 
+    });
   }
 
   render() {
