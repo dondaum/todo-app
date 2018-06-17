@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import Jumbotron_Head from './components/jumbotron';
 import Nav_header from './components/nav';
 import TodoTable from './components/Boot_table';
 import New_todo from './components/New_todo';
+
 
 
 const todos = [
@@ -19,7 +21,7 @@ const todos = [
   },
   {
     title: 'Wash the dishes',
-    due_date: '20.03.2018',
+    due_date: '20.03.2022',
     priority: 'low'
   }
 ];
@@ -45,9 +47,18 @@ class App extends Component {
   }
 
   getTodos() {
-    const todos = JSON.parse(localStorage.getItem('todos'));
+    //const todos = JSON.parse(localStorage.getItem('todos'));
 
-    this.setState( { todos });
+    axios.get('http://localhost:3001/api/v1/todos')
+    .then(response => {
+        console.log(response)
+        this.setState({
+            todos: response.data
+        })
+    })
+    .catch(error => console.log(error))
+
+   // this.setState( { todos });
   }
 
   onDelete(title) {
@@ -55,13 +66,7 @@ class App extends Component {
   }
 
   onCreate(title, due_date, priority ){
-    // const todos = JSON.parse(localStorage.getItem('todos'))
 
-    //  todos.push({
-    //   title,
-    //    due_date,
-    //    priority
-    //  });
 
     const newTodo = {
       title: title,

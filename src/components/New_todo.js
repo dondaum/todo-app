@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 class New_todo extends Component {
     constructor(props) {
@@ -11,7 +12,25 @@ class New_todo extends Component {
     onSubmit(event) {
         event.preventDefault();
 
-        this.props.onCreate(this.titleInput.value, this.dateInput.value, this.priorityInput.value );
+     //   this.props.onCreate(this.titleInput.value, this.dateInput.value, this.priorityInput.value );
+
+        axios.post(
+            'http://localhost:3001/api/v1/todos',
+            { todo:
+              {
+                title: this.titleInput.value,
+                due_date: this.dateInput.value,
+                priority: this.priorityInput.value 
+              }
+            }
+          )
+          .then(response => {
+            console.log("It worked.", response);
+
+            this.props.onCreate(this.titleInput.value, this.dateInput.value, this.priorityInput.value );
+            
+          })
+          .catch(error => console.log(error))
 
     }
 
